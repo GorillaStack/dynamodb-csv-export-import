@@ -1,6 +1,6 @@
 {
   "name": "@gorillastack/dynamodb-csv-export-import",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Import CSV files into DynamoDB created by the AWS DynamoDB Console 'Export to csv' feature",
   "main": "index.js",
   "bin": {
