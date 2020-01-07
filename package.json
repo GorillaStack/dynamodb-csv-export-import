@@ -1,0 +1,26 @@
+{
+  "name": "@gorillastack/dynamodb-csv-export-import",
+  "version": "1.0.0",
+  "description": "Import CSV files into DynamoDB created by the AWS DynamoDB Console 'Export to csv' feature",
+  "main": "index.js",
+  "bin": {
+    "dynamodb-csv-export-import": "./index.js"
+  },
+  "keywords": [
+    "dynamodb",
+    "csv",
+    "import",
+    "export"
+  ],
+  "author": "Chris Armstrong",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "aws-sdk": "^2.598.0",
+    "csv-parse": "^4.8.3",
+    "debug": "^4.1.1"
+  },
+  "repository": {
+    "url": "https://github.com/GorillaStack/dynamodb-csv-export-import.git",
+    "type": "git"
+  }
+}
