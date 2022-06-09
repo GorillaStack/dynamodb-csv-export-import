@@ -27,10 +27,10 @@ const transformRecord = record => Object.entries(record)
   .reduce((output, [key, value]) => {
     const [type,name] = key.split("|");
     if(!name) {
-      throw new Error(`DynamoDB type information is missing for ${key} - must be one of ${dynamoDbTypes.join(",")}. Example: S|id`)
+      throw new Error(`DynamoDB type information is missing for ${key} - must be one of ${dynamoDbTypes.join(",")}. Example: S|id`);
     }
     if(!dynamoDbTypes.includes(type)) {
-      throw new Error(`DynamoDB type information is incompatible for ${key} - must be one of ${dynamoDbTypes.join(",")}.`)
+      throw new Error(`DynamoDB type information is incompatible for ${key} - must be one of ${dynamoDbTypes.join(",")}.`);
     }
     if (!value) {
       return output;
