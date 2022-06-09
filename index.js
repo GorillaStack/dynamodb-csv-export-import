@@ -7,7 +7,7 @@ const DynamoDB = require('aws-sdk/clients/dynamodb');
 const stream = require('stream');
 const util = require('util');
 const debug = require('debug')('dynamodb-csv-export-import');
-
+const dynamoDbTypes = ["B","BOOL","BS","L","M","N","NS","NULL","S","SS"];
 const pipeline = util.promisify(stream.pipeline);
 
 async function writeBatch(ddb, tableName, batch) {
@@ -25,13 +25,18 @@ async function writeBatch(ddb, tableName, batch) {
 
 const transformRecord = record => Object.entries(record)
   .reduce((output, [key, value]) => {
-    const [, name, type] = /(\w+) \((\w+)\)/.exec(key);
+    const [type,name] = key.split("|");
+    if(!name) {
+      throw new Error(`DynamoDB type information is missing for ${key} - must be one of ${dynamoDbTypes.join(",")}. Example: S|id`);
+    }
+    if(!dynamoDbTypes.includes(type)) {
+      throw new Error(`DynamoDB type information is incompatible for ${key} - must be one of ${dynamoDbTypes.join(",")}.`);
+    }
     if (!value) {
       return output;
     }
-    const contents = (['L', 'M', 'BOOL'].includes(type)) ? JSON.parse(value) : value;
     output[name] = {
-      [type]: contents,
+      [type]: ["L","M","NS","SS","BS"].includes(type) ? JSON.parse(value) : value,
     };
     return output;
   }, {});
